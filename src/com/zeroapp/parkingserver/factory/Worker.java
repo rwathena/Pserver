@@ -20,7 +20,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.zeroapp.parking.message.ClientServerMessage;
 import com.zeroapp.parking.message.MessageConst;
 import com.zeroapp.parkingserver.common.Area;
@@ -36,8 +35,6 @@ import com.zeroapp.parkingserver.dao.BiddingDao;
 import com.zeroapp.parkingserver.dao.BusinessDao;
 import com.zeroapp.parkingserver.dao.CarDao;
 import com.zeroapp.parkingserver.dao.CityDao;
-import com.zeroapp.parkingserver.dao.DBCPBean;
-import com.zeroapp.parkingserver.dao.DBUtil;
 import com.zeroapp.parkingserver.dao.ParkingInfoDao;
 import com.zeroapp.parkingserver.dao.UserDao;
 import com.zeroapp.parkingserver.dao.VotingDao;
@@ -63,13 +60,13 @@ import com.zeroapp.utils.Log;
 public class Worker {
 
 	private MessageBox mBox = null;
-	private Connection conn= null;
+	private Connection conn = null;
 
-	public Worker(MessageBox box,Connection connection) {
+	public Worker(MessageBox box, Connection connection) {
 		this.mBox = box;
-		if(conn == null){
-			System.out.println("is conn null? "+conn);
-		this.conn = connection;
+		if (conn == null) {
+			System.out.println("is conn null? " + conn);
+			this.conn = connection;
 		}
 	}
 
@@ -499,9 +496,9 @@ public class Worker {
 		ArrayList<Bidding> biddingList = biddingDao.getUserBiddings(u
 				.getUserID());
 		ArrayList<ParkingInfo> parkingInfoList = new ArrayList<ParkingInfo>();
-//		ArrayList<String> carNumArrayList = new ArrayList<String>();
+		// ArrayList<String> carNumArrayList = new ArrayList<String>();
 		String sql = "select carnum from parking.voting where biddingid=?";
-//		Connection conn = DBUtil.getDBUtil().getConnection();
+		// Connection conn = DBUtil.getDBUtil().getConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			if (biddingList != null) {
@@ -511,8 +508,9 @@ public class Worker {
 					if (rs != null) {
 						while (rs.next()) {
 							ArrayList<ParkingInfo> pList = new ArrayList<ParkingInfo>();
-							String carN = votingdao.getVoting(b.getBiddingID()).getCarNum();
-							if(carN == null){
+							String carN = votingdao.getVoting(b.getBiddingID())
+									.getCarNum();
+							if (carN == null) {
 								m.setMessageResult(MessageConst.MessageResult.MSG_RESULT_FAIL);
 								m.setMessageContent(MessageConst.SQL_CONSTANST.SQL_EXP);
 							}
@@ -530,7 +528,7 @@ public class Worker {
 			m.setMessageContent(MessageConst.SQL_CONSTANST.SQL_EXP);
 			e.printStackTrace();
 		}
-		if(parkingInfoList.size()>0){
+		if (parkingInfoList.size() > 0) {
 			m.setMessageResult(MessageConst.MessageResult.MSG_RESULT_SUCCESS);
 		}
 		closeConn(conn);
@@ -550,10 +548,12 @@ public class Worker {
 		closeConn(conn);
 		mBox.sendMessage(m);
 	}
-	private void closeConn(Connection conn){
+
+	private void closeConn(Connection conn) {
 		try {
 			conn.commit();
-			conn.close();
+			// conn.close();
+			System.out.println("connection closed: " + conn.isClosed());
 		} catch (SQLException e) {
 			try {
 				conn.rollback();
@@ -562,6 +562,15 @@ public class Worker {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("connection closed in finally: "
+						+ conn.isClosed());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

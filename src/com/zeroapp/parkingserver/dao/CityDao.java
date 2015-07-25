@@ -35,7 +35,7 @@ public String getCityName(int cityid){
 public int getCityId(String city) {
 
 	try {
-        String sql = "select id,name,countrycode,district from world.city where name=?";
+        String sql = "select id,name,countrycode,district from parking.city where name=?";
 //		Connection conn = DBUtil.getDBUtil().getConnection();
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setString(1, city);

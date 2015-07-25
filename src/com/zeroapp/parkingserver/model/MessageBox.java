@@ -13,7 +13,6 @@
 
 package com.zeroapp.parkingserver.model;
 
-
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -37,42 +36,48 @@ import com.zeroapp.utils.Log;
 
 public class MessageBox extends ChannelInboundHandlerAdapter {
 
-    private ChannelHandlerContext mctx;
-    private DBCPBean dbcpBean = new DBCPBean();
+	private ChannelHandlerContext mctx;
+	private DBCPBean dbcpBean = new DBCPBean();
 
-    public MessageBox() {
-//        new MessagePool(MessageBox.this).startLooping();
-    }
+	public MessageBox() {
+		// new MessagePool(MessageBox.this).startLooping();
+	}
 
-    public void sendMessage(ClientServerMessage m) {
-        if (mctx != null) {
-            mctx.writeAndFlush(m);
-        }
+	public void sendMessage(ClientServerMessage m) {
+		if (mctx != null) {
+			mctx.writeAndFlush(m);
+		}
 
-    }
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        super.channelActive(ctx);
-        Log.i("");
-        mctx = ctx;
-    }
+	}
 
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        if (msg != null) {
-            ClientServerMessage m = (ClientServerMessage) msg;
-            Log.i("" + m.getMessageContent());
-            Worker w = new Worker(MessageBox.this,dbcpBean.getConn());
-            w.deal(m);
-        } else {
-            Log.w("null");
-        }
-    }
+	@Override
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		super.channelActive(ctx);
+		Log.i("");
+		mctx = ctx;
+	}
 
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        super.exceptionCaught(ctx, cause);
-        cause.printStackTrace();
-    }
+	@Override
+	public void channelRead(ChannelHandlerContext ctx, Object msg)
+			throws Exception {
+		if (msg != null) {
+			ClientServerMessage m = (ClientServerMessage) msg;
+			Log.i("" + m.getMessageContent());
+			if (dbcpBean == null) {
+				dbcpBean = new DBCPBean();
+			}
+			Worker w = new Worker(MessageBox.this, dbcpBean.getConn());
+			w.deal(m);
+		} else {
+			Log.w("null");
+		}
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
+			throws Exception {
+		super.exceptionCaught(ctx, cause);
+		cause.printStackTrace();
+	}
 
 }

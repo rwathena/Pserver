@@ -19,11 +19,11 @@ import org.apache.commons.dbcp2.BasicDataSource;
 public final class DBCPBean {
 	/** 数据源，static */
 	private static DataSource DS;
-	public static final String DB_ADRESS = "localhost";
+	public static final String DB_ADRESS = "rdsui261pq704n591118.mysql.rds.aliyuncs.com";
 	public static final String DB_PORT = "3306";
 	public static final String DB_NAME = "parking";
-	public static String DB_ADMIN_NAME = "root";
-	public static String DB_ADMIN_PWD = "root";
+	public static String DB_ADMIN_NAME = "zxd";
+	public static String DB_ADMIN_PWD = "123456";
 
 	/** 从数据源获得一个连接 */
 	public Connection getConn() {
@@ -72,7 +72,7 @@ public final class DBCPBean {
 	 * @return
 	 */
 	public static void initDS(String connectURI) {
-		initDS(connectURI, "root", "root", "com.mysql.jdbc.Driver", 50, 1000,
+		initDS(connectURI, "zxd", "123456", "com.mysql.jdbc.Driver", 50, 1000,
 				100, 10000, 1);
 	}
 
