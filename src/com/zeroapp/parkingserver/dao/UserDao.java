@@ -470,7 +470,7 @@ public class UserDao {
 	}
 
 	public int updateUserItems(User u) {
-		String sql = "UPDATE parking.user_info SET  Name=?, PhoneNum=?,  IdentityNum=? WHERE UserID=?";
+		String sql = "UPDATE `parking`.`user_info` SET `Account`=?, `Password`=?, `Name`=?, `Sex`=?, `PhoneNum`=?, `UserType`=?, `AccountBanlance`=? WHERE `UserID`='2'";
 		// Connection conn = DBUtil.getDBUtil().getConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);

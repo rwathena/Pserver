@@ -79,7 +79,7 @@ public class BiddingDao {
 
 	public boolean createBid(Bidding b) {
 		try {
-			String sql = "insert into parking.bidding(businessid,userid,timestart,timeend) values(?,?,?,?)";// TODO
+			String sql = "insert into parking.bidding values(null,?,?,?,?)";// TODO
 //			Connection conn = DBUtil.getDBUtil().getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, b.getBusinessID());
