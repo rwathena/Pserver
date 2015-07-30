@@ -60,7 +60,7 @@ public class AreaDao {
 		}
 	}
 	public String getAreaCoordinates(int areaId){
-			String sql = "select coordinates from parking.areas_details where city=?";
+			String sql = "select coordinates from parking.areas_details where Id_p=?";
 			try {
 	            if(conn == null){
 //	    			conn = DBUtil.getDBUtil().getConnection();

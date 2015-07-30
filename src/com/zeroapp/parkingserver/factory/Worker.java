@@ -337,8 +337,9 @@ public class Worker {
 		int businessId = bd.getBusinessIdFromBidding(biddingId);
 		int userComId = bd.getBiddingDetailsFormBiddingId(biddingId)
 				.getUserID();
-		String bmapPointsCoordinatesS = ad.getAreaCoordinates(businessDao
-				.getBusinessAreaId(businessId));
+		int area_id = businessDao
+				.getBusinessAreaId(businessId);
+		String bmapPointsCoordinatesS = ad.getAreaCoordinates(area_id);
 		Log.w("Bmap points coordinates: " + bmapPointsCoordinatesS);
 		Business bs = businessDao.getBusinessDetails(businessId);
 		User userCom = userD.getUserInfosFormUserId(userComId);
@@ -353,8 +354,8 @@ public class Worker {
 				m.setMessageResult(MessageConst.MessageResult.MSG_RESULT_FAIL);
 				m.setMessageContent(MessageConst.PARKING_CONSTANST.UNAVAILABLE_PARKING);
 			}
-			m.setMessageResult(MessageConst.MessageResult.MSG_RESULT_PARKING_NOT_AVAILABLE);
-			m.setMessageContent(MessageConst.PARKING_CONSTANST.NO_ENOUGH_MONEY_PARKING);
+//			m.setMessageResult(MessageConst.MessageResult.MSG_RESULT_PARKING_NOT_AVAILABLE);
+//			m.setMessageContent(MessageConst.PARKING_CONSTANST.NO_ENOUGH_MONEY_PARKING);
 			mBox.sendMessage(m);
 			return;
 		}
