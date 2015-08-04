@@ -95,9 +95,9 @@ public class CarDao {
 			ps.setString(1, car.getCarNum());
 			ps.setInt(2, car.getUserID());
 			ps.setInt(3, car.getBiddingID());
-			ps.setString(4, car.getCarState());
+			ps.setString(4, car.getCarType());
 			ps.setInt(5, car.getCarValue());
-			ps.setString(6,car.getCarType());
+			ps.setString(6,car.getCarState());
 			ps.setString(7, car.getParkingArea());
 			int rs = ps.executeUpdate();
 			if (rs > 0) {

@@ -183,7 +183,7 @@ public class BiddingDao {
 		String sql = "select * from parking.bidding where businessid=?";
 		PreparedStatement ps;
 		
-		String sqlGetComName = "select account from parking.user_info where userid=?";
+		String sqlGetComName = "select name from parking.user_info where userid=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, b.getBusinessID());
@@ -203,7 +203,7 @@ public class BiddingDao {
 			psComName.setInt(1, bding.getUserID());
 			ResultSet rs = psComName.executeQuery();
 			while(rs.next()){
-				bding.setComName(rs.getString("account"));
+				bding.setComName(rs.getString("name"));
 			}
 			return bding;
 		} catch (SQLException e) {
